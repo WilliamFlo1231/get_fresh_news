@@ -2,6 +2,7 @@ import logging
 from AP.new import APNew
 from RPA.Browser.Selenium import Selenium
 from selenium.webdriver.common.by import By
+from selenium.webdriver import FirefoxOptions
 
 class AP:
     def __init__(self, CONFIG, CURRENT_DATE) -> None:
@@ -11,7 +12,10 @@ class AP:
         self.news = []
     
     def navigate_to_news(self):
-        self.browser.open_browser(self.CONFIG.AP.url)
+        opts = FirefoxOptions()
+        opts.add_argument("--headless")
+        logging.info('Starting web automation process')
+        self.browser.open_browser(self.CONFIG.AP.url, options=opts)
         self.browser.wait_until_element_is_visible(self.CONFIG.AP.search_button,
                                                    self.CONFIG.delays.medium)
         search_button = self.browser.find_element(self.CONFIG.AP.search_button)

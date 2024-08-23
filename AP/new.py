@@ -10,7 +10,6 @@ class OlderNewException(Exception):
         self.message = message
         super().__init__(self.message)
 
-
 class APNew:
     def __init__(self, CONFIG, CURRENT_DATE, CURRENT_DATE_FOLDER, web_new) -> None:
         months_to_review = 0 if CONFIG.months_to_review <= 1 else -(CONFIG.months_to_review - 1)
@@ -31,7 +30,7 @@ class APNew:
                                     title_description)
         
         self.has_money_amount = bool(amount_matches)
-        self.phrase_count = len(re.findall(CONFIG.phrase.lower(),
+        self.phrase_count = len(re.findall(CONFIG.search_phrase.lower(),
                                            title_description.lower()))
         try:
             web_picture = web_new.find_element(By.CLASS_NAME, CONFIG.new.image)

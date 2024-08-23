@@ -1,12 +1,14 @@
 import logging
-from new import APNew
+from AP.new import APNew
 from RPA.Browser.Selenium import Selenium
 from selenium.webdriver.common.by import By
 
 class AP:
-    def __init__(self, CONFIG) -> None:
+    def __init__(self, CONFIG, CURRENT_DATE) -> None:
         self.CONFIG = CONFIG
+        self.CURRENT_DATE = CURRENT_DATE
         self.browser = Selenium()
+        self.news = []
     
     def navigate_to_news(self):
         self.browser.open_browser(self.CONFIG.AP.url)
@@ -45,7 +47,7 @@ class AP:
             return False
 
     def start(self):
-        self.navigate_to_new()
+        self.navigate_to_news()
         try:
             self.get_news()
         except AssertionError as e:
@@ -61,12 +63,3 @@ class AP:
                                        self.CONFIG.paths.output, web_new).__dict__)
             except Exception as e:
                 logging.warning(e)
-
-if __name__ == '__main__':
-    import sys
-    sys.path.append('../get_fresh_news')
-    from utils.config import load_config
-    c = load_config('./config.yaml')
-    a = AP(c)
-    a.start()
-    ...
